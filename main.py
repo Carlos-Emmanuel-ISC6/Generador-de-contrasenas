@@ -53,17 +53,18 @@ class AplicacionValidadorContrasena:
        self.etiqueta_resultado.grid(row=4, column=0, pady=10, sticky="ew")
    
    def validar_contrasena(self):
-       contrasena = self.entrada_contrasena.get()
-       
-       if contrasena.strip() == "":
-           self.etiqueta_resultado.configure(text="Por favor ingrese una contraseña", text_color="orange")
-           return
-       
-       if validar_contrasena(contrasena):
-           self.etiqueta_resultado.configure(text="✓ Contraseña válida", text_color="green")
-       else:
-           self.etiqueta_resultado.configure(text="✗ Contraseña inválida", text_color="red")
+    contrasena = self.entrada_contrasena.get()
+    
+    if contrasena.strip() == "":
+        self.etiqueta_resultado.configure(text="Por favor ingrese una contraseña", text_color="orange")
+        return
+    
+    if validar_contrasena(contrasena):
+        self.etiqueta_resultado.configure(text="✓ Contraseña válida", text_color="green")
+    else:
+        self.etiqueta_resultado.configure(text="✗ Contraseña inválida", text_color="red")
 
+    self.entrada_contrasena.delete(0, 'end')
 if __name__ == "__main__":
    interfaz = ctk.CTk()
    app = AplicacionValidadorContrasena(interfaz)
