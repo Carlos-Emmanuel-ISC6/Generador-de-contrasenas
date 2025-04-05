@@ -6,7 +6,7 @@ class AplicacionValidadorContrasena:
         self.interfaz = interfaz
         self.interfaz.title("Validador de Contraseñas")
         self.interfaz.geometry("900x600") 
-        self.interfaz.resizable(False, False)
+        self.interfaz.resizable(0, 0)
 
         ctk.set_appearance_mode("light")  
         ctk.set_default_color_theme("blue")
@@ -115,7 +115,7 @@ class AplicacionValidadorContrasena:
             "Al menos un número",
             "Al menos un carácter especial (@ * ? -)"
         ]
-        
+
         for i, etiqueta in enumerate(self.requisitos_labels):
             etiqueta.configure(text=f"{requisitos_iconos[i]} {textos_base[i]} {'✓' if cumple[i] else '✗'}", text_color="green" if cumple[i] else "red")
         return all(cumple)
