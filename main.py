@@ -6,9 +6,9 @@ class AplicacionValidadorContrasena:
         self.interfaz = interfaz
         self.interfaz.title("Validador de Contraseñas")
         self.interfaz.geometry("900x600") 
-        self.interfaz.resizable(0, 0)
+        self.interfaz.resizable(False, False)
 
-        ctk.set_appearance_mode("light")  
+        ctk.set_appearance_mode("light")  # Solo tema claro
         ctk.set_default_color_theme("blue")
 
         self.interfaz.grid_rowconfigure(0, weight=1)
@@ -60,9 +60,10 @@ class AplicacionValidadorContrasena:
             "Al menos una letra mayúscula",
             "Al menos una letra minúscula",
             "Al menos un número",
-            "Al menos un carácter especial (@ * ? -)"
+            "Al menos un carácter especial (@ * ? -)",
+            "No debe contener espacios en blanco"
         ]
-        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣"]
+        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣", "🚫"]
         
         self.requisitos_labels = []
         for i, texto in enumerate(requisitos_texto):
@@ -72,9 +73,11 @@ class AplicacionValidadorContrasena:
             etiqueta.grid(row=0, column=0, padx=10, sticky="w")
             self.requisitos_labels.append(etiqueta)
 
+        self.tema_actual = "light"
+
     def validar_contrasena(self):
         contrasena = self.entrada_contrasena.get()
-        pattern = r"^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@*?\-])[A-Za-zñÑ][A-Za-zñÑ\d@*?\-]{4,13}$"
+        pattern = r"^(?=\S+$)(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@*?\-])[A-Za-zñÑ][A-Za-zñÑ\d@*?\-]{4,13}$"
 
         if contrasena.strip() == "":
             self.etiqueta_resultado.configure(text="Por favor ingrese una contraseña", text_color="orange")
@@ -104,31 +107,33 @@ class AplicacionValidadorContrasena:
             bool(re.search(r'[A-ZÑ]', contrasena)),
             bool(re.search(r'[a-zñ]', contrasena)),
             bool(re.search(r'\d', contrasena)),
-            bool(re.search(r'[@*?\-]', contrasena))
+            bool(re.search(r'[@*?\-]', contrasena)),
+            " " not in contrasena
         ]
-        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣"]
+        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣", "🚫"]
         textos_base = [
             "Mínimo 5 y máximo 14 caracteres",
             "Debe comenzar con una letra",
             "Al menos una letra mayúscula",
             "Al menos una letra minúscula",
             "Al menos un número",
-            "Al menos un carácter especial (@ * ? -)"
+            "Al menos un carácter especial (@ * ? -)",
+            "No debe contener espacios en blanco"
         ]
-
         for i, etiqueta in enumerate(self.requisitos_labels):
             etiqueta.configure(text=f"{requisitos_iconos[i]} {textos_base[i]} {'✓' if cumple[i] else '✗'}", text_color="green" if cumple[i] else "red")
         return all(cumple)
 
     def resetear_requisitos(self):
-        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣"]
+        requisitos_iconos = ["📏", "🔤", "🔠", "🔡", "🔢", "🔣", "🚫"]
         textos_originales = [
             "Mínimo 5 y máximo 14 caracteres",
             "Debe comenzar con una letra",
             "Al menos una letra mayúscula",
             "Al menos una letra minúscula",
             "Al menos un número",
-            "Al menos un carácter especial (@ * ? -)"
+            "Al menos un carácter especial (@ * ? -)",
+            "No debe contener espacios en blanco"
         ]
         for i, etiqueta in enumerate(self.requisitos_labels):
             etiqueta.configure(text=f"{requisitos_iconos[i]} {textos_originales[i]}", text_color="black")
