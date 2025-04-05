@@ -8,7 +8,7 @@ class AplicacionValidadorContrasena:
         self.interfaz.geometry("900x600") 
         self.interfaz.resizable(False, False)
 
-        ctk.set_appearance_mode("light")  # Solo tema claro
+        ctk.set_appearance_mode("light")  
         ctk.set_default_color_theme("blue")
 
         self.interfaz.grid_rowconfigure(0, weight=1)
